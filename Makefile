@@ -1,43 +1,14 @@
-REBAR?=./rebar
+PROJECT = jiffy
 
+TEST_DEPS = proper
 
-all: build
+dep_proper = git git@github.com:manopapad/proper master
 
+LDFLAGS = -lstdc++
 
-clean:
-	$(REBAR) clean
-	rm -rf logs
-	rm -rf .eunit
-	rm -f test/*.beam
+TEST_ERLC_OPTS ?= +debug_info +warn_export_vars +warn_shadow_vars \
+	+warn_obsolete_guard -DTEST=1 -DEXTRA=1 -DJIFFY_DEV
 
+include erlang.mk
 
-distclean: clean
-	git clean -fxd
-
-
-devmarker:
-	@touch .jiffy.dev
-
-
-depends: devmarker
-	@if test ! -d ./deps/proper; then \
-		$(REBAR) get-deps; \
-	fi
-
-
-build: depends
-	$(REBAR) compile
-
-
-eunit:
-	$(REBAR) eunit skip_deps=true
-
-
-check: build eunit
-
-
-%.beam: %.erl
-	erlc -o test/ $<
-
-
-.PHONY: all clean distclean depends build etap eunit check
+CFLAGS += -fno-strict-aliasing

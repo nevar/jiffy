@@ -1,6 +1,8 @@
 {application, jiffy, [
     {description, "JSON Decoder/Encoder."},
-    {vsn, git},
+    {vsn, "0.14.0"},
+    {id, "git"},
     {registered, []},
-    {applications, [kernel, stdlib]}
+    {applications, [kernel, stdlib]},
+    {modules, []}
 ]}.

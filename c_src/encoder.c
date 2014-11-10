@@ -66,7 +66,7 @@ static char* shifts[NUM_SHIFTS] = {
 };
 
 
-Encoder*
+static Encoder*
 enc_new(ErlNifEnv* env)
 {
     jiffy_st* st = (jiffy_st*) enif_priv_data(env);
@@ -98,7 +98,7 @@ enc_new(ErlNifEnv* env)
     return e;
 }
 
-int
+static int
 enc_init(Encoder* e, ErlNifEnv* env)
 {
     e->env = env;
@@ -115,14 +115,14 @@ enc_destroy(ErlNifEnv* env, void* obj)
     }
 }
 
-ERL_NIF_TERM
+static ERL_NIF_TERM
 enc_error(Encoder* e, const char* msg)
 {
     //assert(0 && msg);
     return make_error(e->atoms, e->env, msg);
 }
 
-ERL_NIF_TERM
+static ERL_NIF_TERM
 enc_obj_error(Encoder* e, const char* msg, ERL_NIF_TERM obj)
 {
     return make_obj_error(e->atoms, e->env, msg, obj);
@@ -145,7 +145,7 @@ enc_ensure(Encoder* e, size_t req)
     return 1;
 }
 
-int
+static int
 enc_result(Encoder* e, ERL_NIF_TERM* value)
 {
     if(e->i != e->curr->size) {
@@ -159,7 +159,7 @@ enc_result(Encoder* e, ERL_NIF_TERM* value)
     return 1;
 }
 
-int
+static int
 enc_done(Encoder* e, ERL_NIF_TERM* value)
 {
     ERL_NIF_TERM last;
@@ -514,7 +514,7 @@ enc_comma(Encoder* e)
 }
 
 #if MAP_TYPE_PRESENT
-int
+static int
 enc_map_to_ejson(ErlNifEnv* env, ERL_NIF_TERM map, ERL_NIF_TERM* out)
 {
     ErlNifMapIterator iter;
