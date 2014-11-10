@@ -198,7 +198,7 @@ enc_unknown(Encoder* e, ERL_NIF_TERM value)
 
     e->iolist = enif_make_list_cell(e->env, value, e->iolist);
     e->iolen++;
-    
+
     // Track the total number of bytes produced before
     // splitting our IO buffer. We add 16 to this value
     // as a rough estimate of the number of bytes that
@@ -219,7 +219,7 @@ enc_unknown(Encoder* e, ERL_NIF_TERM value)
 
         e->p = (char*) e->curr->data;
         e->u = (unsigned char*) e->curr->data;
-        e->i = 0;        
+        e->i = 0;
     }
 
     return 1;
