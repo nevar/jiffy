@@ -91,23 +91,13 @@ json_string() ->
     escaped_utf8_bin().
 
 
-json_list(S) when S =< 0 ->
-    [];
-json_list(S) ->
-    ?LETSHRINK(
-        [ListSize],
-        [integer(0, S)],
-        vector(ListSize, json_text(S - ListSize))
-    ).
-
-
 json_object(S) when S =< 0 ->
-    {[]};
+    [];
 json_object(S) ->
     ?LETSHRINK(
         [ObjectSize],
         [integer(0, S)],
-        {vector(ObjectSize, {json_string(), json_text(S - ObjectSize)})}
+        vector(ObjectSize, {json_string(), json_text(S - ObjectSize)})
     ).
 
 
@@ -121,10 +111,7 @@ json_value() ->
 
 
 json_text(S) when S > 0 ->
-    ?LAZY(oneof([
-        json_list(S),
-        json_object(S)
-    ]));
+    ?LAZY(json_object(S));
 json_text(_) ->
     json_value().
 

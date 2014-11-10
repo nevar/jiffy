@@ -8,7 +8,7 @@
 
 trailing_whitespace_test_() ->
     Str = [<<"{\"a\":\"b\"}">>, gen_ws(2040)],
-    Obj = {[{<<"a">>, <<"b">>}]},
+    Obj = [{<<"a">>, <<"b">>}],
     ?_assertEqual(Obj, jiffy:decode(Str)).
 
 

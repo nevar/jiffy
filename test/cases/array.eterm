@@ -5,7 +5,7 @@
     true,
     false,
     null,
-    {[{<<"key">>, <<"value">>}]},
+    [{<<"key">>, <<"value">>}],
     [
         null,
         null,

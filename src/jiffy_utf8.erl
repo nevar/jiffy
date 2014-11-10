@@ -5,10 +5,10 @@
 -export([fix/1]).
 
 
-fix({Props}) ->
-    fix_props(Props, []);
+fix([{_,_} | _] = Props) ->
+    fix_props(Props);
 fix(Values) when is_list(Values) ->
-    fix_array(Values, []);
+    fix_array(Values);
 fix(Bin) when is_binary(Bin) ->
     fix_bin(Bin);
 fix(Val) ->
@@ -27,19 +27,18 @@ maybe_map(Val) ->
     Val.
 -endif.
 
-fix_props([], Acc) ->
-    {lists:reverse(Acc)};
-fix_props([{K0, V0} | Rest], Acc) ->
+fix_props([{K0, V0} | Rest]) ->
     K = fix(K0),
     V = fix(V0),
-    fix_props(Rest, [{K, V} | Acc]).
+    [{K, V} | fix_props(Rest)];
+fix_props([]) ->
+	[].
 
 
-fix_array([], Acc) ->
-    lists:reverse(Acc);
-fix_array([Val | Rest], Acc0) ->
-    Acc = [fix(Val) | Acc0],
-    fix_array(Rest, Acc).
+fix_array([Val | Rest]) ->
+    [fix(Val) | fix_array(Rest)];
+fix_array([]) ->
+	[].
 
 
 fix_bin(Bin) ->

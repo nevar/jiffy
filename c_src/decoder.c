@@ -618,7 +618,7 @@ make_empty_object(ErlNifEnv* env, int ret_map)
     }
 #endif
 
-    return enif_make_tuple1(env, enif_make_list(env, 0));
+    return enif_make_list1(env, enif_make_tuple(env, 0));
 }
 
 int
@@ -652,7 +652,7 @@ make_object(ErlNifEnv* env, ERL_NIF_TERM pairs, ERL_NIF_TERM* out, int ret_map)
         val = enif_make_tuple2(env, key, val);
         ret = enif_make_list_cell(env, val, ret);
     }
-    *out = enif_make_tuple1(env, ret);
+    *out = ret;
 
     return 1;
 }
